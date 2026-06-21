@@ -10,20 +10,26 @@
 </head>
 <body>
     <h1>Cuentas en Venta</h1>
-    <div id="lista-cuentas">Cargando...</div>
+    <div id="lista-cuentas">Cargando cuentas...</div>
 
     <script>
-https://script.google.com/macros/s/AKfycbx3V4ZYfdtzUrxDtjv_d60VMFNhNuzfIb9UqKPN548ArndkdBAKgMKez9rtc87sMyWZwA/exec        
+        const url = 'https://script.google.com/macros/s/AKfycbx3V4ZYfdtzUrxDtjv_d60VMFNhNuzfIb9UqKPN548ArndkdBAKgMKez9rtc87sMyWZwA/exec';
+        
         fetch(url)
             .then(res => res.json())
             .then(data => {
                 const contenedor = document.getElementById('lista-cuentas');
                 contenedor.innerHTML = '';
+                // Empezamos desde el índice 1 para saltar los encabezados
                 data.slice(1).forEach(row => {
                     contenedor.innerHTML += `<div class="card">
                         <p><strong>Red:</strong> ${row[1]} | <strong>Seguidores:</strong> ${row[2]} | <strong>Precio:</strong> $${row[3]}</p>
                     </div>`;
                 });
+            })
+            .catch(error => {
+                document.getElementById('lista-cuentas').innerHTML = "Error de conexión. Revisa la consola (F12).";
+                console.error("Error detectado:", error);
             });
     </script>
 </body>
