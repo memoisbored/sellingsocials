@@ -13,23 +13,24 @@
     <div id="lista-cuentas">Cargando cuentas...</div>
 
     <script>
-        const url = 'https://script.google.com/macros/s/AKfycbx3V4ZYfdtzUrxDtjv_d60VMFNhNuzfIb9UqKPN548ArndkdBAKgMKez9rtc87sMyWZwA/exec';
+        // Definimos la variable directamente dentro del script
+        var url = 'https://script.google.com/macros/s/AKfycbx3V4ZYfdtzUrxDtjv_d60VMFNhNuzfIb9UqKPN548ArndkdBAKgMKez9rtc87sMyWZwA/exec';
         
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                const contenedor = document.getElementById('lista-cuentas');
+                var contenedor = document.getElementById('lista-cuentas');
                 contenedor.innerHTML = '';
-                // Empezamos desde el índice 1 para saltar los encabezados
-                data.slice(1).forEach(row => {
-                    contenedor.innerHTML += `<div class="card">
-                        <p><strong>Red:</strong> ${row[1]} | <strong>Seguidores:</strong> ${row[2]} | <strong>Precio:</strong> $${row[3]}</p>
-                    </div>`;
+                // data.slice(1) salta la fila de encabezados
+                data.slice(1).forEach(function(row) {
+                    contenedor.innerHTML += '<div class="card">' +
+                        '<p><strong>Red:</strong> ' + row[1] + ' | <strong>Seguidores:</strong> ' + row[2] + ' | <strong>Precio:</strong> $' + row[3] + '</p>' +
+                        '</div>';
                 });
             })
-            .catch(error => {
-                document.getElementById('lista-cuentas').innerHTML = "Error de conexión. Revisa la consola (F12).";
-                console.error("Error detectado:", error);
+            .catch(function(error) {
+                console.error("Error:", error);
+                document.getElementById('lista-cuentas').innerHTML = "Hubo un error al cargar. Revisa la consola.";
             });
     </script>
 </body>
